@@ -15,6 +15,9 @@ class Book:
     def __init__(self, title: str,author: Person) -> None:
         self.title = title
         self.author = author
+    
+    def __str__(self) -> str:
+        return f"{self.title} ({self.author})"
 
 
 class LibraryError(Exception):
