@@ -12,9 +12,9 @@ class Person:
 
 class Book:
     """To implement"""
-    def __init__(self, author: Person, title: str,) -> None:
-        self.author = author
+    def __init__(self, title: str,author: Person) -> None:
         self.title = title
+        self.author = author
 
 
 class LibraryError(Exception):
