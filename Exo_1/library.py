@@ -46,9 +46,11 @@ class Library:
         else:
             self._borrowed_books[book] = person
 
-
-    
-
+    def return_book(self,book: Book) -> None:
+        if (book not in self._borrowed_books.keys):
+            raise LibraryError("Le livre que vous essayez de rendre n'a pas été enrégistré comme prêté")
+        else:
+            self._borrowed_books.pop(book)
 
 
 def main():
