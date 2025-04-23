@@ -37,7 +37,16 @@ class Library:
             return True
         else:
             raise LibraryError("The book is not available")
-            
+    
+    def borrow_book(self,book: Book, person: Person) -> None:
+        if(person not in self._members):
+            raise LibraryError("La personne qui essaye de prêter le livre n'est pas membre de la bibliothèque")
+        elif (not self.is_book_available(book)):
+            raise LibraryError("Le livre que vous essayez de prêter n'est pas dans notre catalogue")
+        else:
+            self._borrowed_books[book] = person
+
+
     
 
 
