@@ -1,6 +1,6 @@
 class Person:
     """Class defining a person"""
-    def __init__(self, first_name: str, last_name: str, age: int, email: str, phone: str) -> None:
+    def __init__(self, first_name: str, last_name: str,) -> None:
         self.first_name = first_name.capitalize()
         self.last_name = last_name.upper()
 
@@ -12,6 +12,9 @@ class Person:
 
 class Book:
     """To implement"""
+    def __init__(self, author: Person, title: str,) -> None:
+        self.author = author
+        self.title = title
 
 
 class LibraryError(Exception):
