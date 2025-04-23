@@ -53,6 +53,13 @@ class Library:
             self._borrowed_books.pop(book)
 
 
+    def add_new_member(self, person:Person)-> None:
+        self._members.add(person)
+    
+    def add_new_book(self, book:Book)->None:
+        self._books.append(book)
+
+
 def main():
     """Test your code here"""
 
