@@ -29,7 +29,7 @@ class Library:
     def __init__(self, name: str) -> None:
         self.name = name
         self._books = []
-        self._members = set
+        self._members = set()
         self._borrowed_books = {}
 
     def is_book_available (self,book: Book)-> bool:
@@ -74,13 +74,26 @@ class Library:
 
 def main():
     """Test your code here"""
-
     antoine = Person("Antoine", "Dupont")
-    print(antoine) 
+    print(antoine)
+
+    julia = Person("Julia", "Roberts")
+    print(julia)
+
+    rugby_book = Book("Jouer au rugby pour les nuls", Person("Louis", "BB"))
+    print(rugby_book)
+
     novel_book = Book("Vingt mille lieues sous les mers", Person("Jules", "Verne"))
     print(novel_book)
+
     library = Library("Public library")
-    library.is_book_available(novel_book)
+    library.print_status()
+
+    library.add_new_book(rugby_book)
+    library.add_new_book(novel_book)
+    library.add_new_member(antoine)
+    library.add_new_member(julia)
+    library.print_status()
 
 if __name__ == "__main__":
     main()
