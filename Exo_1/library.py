@@ -1,8 +1,8 @@
 class Person:
     """Class defining a person"""
-    def __init__(self, first_name: str, last_name: str,) -> None:
-        self.first_name = first_name.capitalize()
-        self.last_name = last_name.upper()
+    def __init__(self, last_name: str, first_name: str,) -> None:
+        self.first_name = first_name.upper()
+        self.last_name = last_name.capitalize()
 
     def __str__(self) -> str:
         return f"{self.last_name} {self.first_name}"
@@ -11,7 +11,7 @@ class Person:
         return f"{self.last_name} {self.first_name}"
 
 class Book:
-    """To implement"""
+    """Books definition"""
     def __init__(self, title: str,author: Person) -> None:
         self.title = title
         self.author = author
@@ -26,11 +26,31 @@ class LibraryError(Exception):
 
 class Library:
     """To implement."""
+    def __init__(self, name: str) -> None:
+        self.name = name
+        self._books = []
+        self._members = set
+        self._borrowed_books = {}
+
+    def is_book_available (self,book: Book)-> bool:
+        if(book in self._books):
+            return True
+        else:
+            raise LibraryError("The book is not available")
+            
+    
+
 
 
 def main():
     """Test your code here"""
 
+    antoine = Person("Antoine", "Dupont")
+    print(antoine) 
+    novel_book = Book("Vingt mille lieues sous les mers", Person("Jules", "Verne"))
+    print(novel_book)
+    library = Library("Public library")
+    library.is_book_available(novel_book)
 
 if __name__ == "__main__":
     main()
