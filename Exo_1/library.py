@@ -58,6 +58,18 @@ class Library:
     
     def add_new_book(self, book:Book)->None:
         self._books.append(book)
+    
+    def print_status(self):
+        available_books = []
+        for book in self._books:
+            if self.is_book_available(book):
+                available_books.append(book)
+
+        print(f"{self.name} status:")
+        print(f"Books catalogue: {self._books}")
+        print(f"Members: {self._members}")
+        print(f"Available books: {available_books}")
+        print(f"Borrowed books: {self._borrowed_books}")
 
 
 def main():
