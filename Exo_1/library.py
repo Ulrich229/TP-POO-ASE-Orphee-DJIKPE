@@ -1,7 +1,7 @@
 class Person:
     """Class defining a person"""
     def __init__(self, last_name: str, first_name: str,) -> None:
-        self.first_name = first_name.upper()
+        self.first_name = first_name.capitalize()
         self.last_name = last_name.capitalize()
 
     def __str__(self) -> str:
@@ -18,6 +18,9 @@ class Book:
     
     def __str__(self) -> str:
         return f"{self.title} ({self.author})"
+    
+    def __repr__(self) -> str:
+        return f"{self.title} ({self.author})"
 
 
 class LibraryError(Exception):
@@ -33,22 +36,33 @@ class Library:
         self._borrowed_books = {}
 
     def is_book_available (self,book: Book)-> bool:
-        if(book in self._books):
-            return True
+        if book  not in self._books:
+            raise LibraryError('Book not in the library')
+        elif book in self._borrowed_books.keys():
+            raise LibraryError("Book borrowed")
         else:
-            raise LibraryError("The book is not available")
+            return True
     
     def borrow_book(self,book: Book, person: Person) -> None:
         if(person not in self._members):
-            raise LibraryError("La personne qui essaye de prêter le livre n'est pas membre de la bibliothèque")
-        elif (not self.is_book_available(book)):
-            raise LibraryError("Le livre que vous essayez de prêter n'est pas dans notre catalogue")
+            raise LibraryError(f"{person} is not a member of the library")
         else:
-            self._borrowed_books[book] = person
+            try:
+                if self.is_book_available(book):
+                    self._borrowed_books[book] = person 
+
+            except LibraryError as error:
+                if str(error) == "Book borrowed":
+                    raise LibraryError(f"{book} is already borrowed by {self._borrowed_books[book]}")
+                else:
+                    raise LibraryError(f"{book} doesn't exist in the library")
+
+
+            
 
     def return_book(self,book: Book) -> None:
-        if (book not in self._borrowed_books.keys):
-            raise LibraryError("Le livre que vous essayez de rendre n'a pas été enrégistré comme prêté")
+        if (book not in self._borrowed_books.keys()):
+            raise LibraryError(f"{book} is not part of the borrowed books")
         else:
             self._borrowed_books.pop(book)
 
@@ -62,14 +76,19 @@ class Library:
     def print_status(self):
         available_books = []
         for book in self._books:
-            if self.is_book_available(book):
-                available_books.append(book)
+            try:
+                if self.is_book_available(book):
+                    available_books.append(book)
+            except:
+                pass
+        
 
         print(f"{self.name} status:")
         print(f"Books catalogue: {self._books}")
         print(f"Members: {self._members}")
         print(f"Available books: {available_books}")
         print(f"Borrowed books: {self._borrowed_books}")
+        print("-----")
 
 
 def main():
@@ -93,6 +112,37 @@ def main():
     library.add_new_book(novel_book)
     library.add_new_member(antoine)
     library.add_new_member(julia)
+    library.print_status()
+
+    print(f"Is {rugby_book} available? {library.is_book_available(rugby_book)}")
+    library.borrow_book(rugby_book, antoine)
+    library.print_status()
+
+    try:
+        library.borrow_book(rugby_book, julia)
+    except LibraryError as error:
+        print(error)
+
+    try:
+        library.borrow_book(Book("Roméo et Juliette", Person("William", "Shakespeare")), julia)
+    except LibraryError as error:
+        print(error)
+
+    try:
+        library.borrow_book(novel_book, Person("Simone", "Veil"))
+    except LibraryError as error:
+        print(error)
+
+    try:
+        library.return_book(novel_book)
+    except LibraryError as error:
+        print(error)
+
+    library.return_book(rugby_book)
+    library.borrow_book(novel_book, julia)
+    library.print_status()
+
+    library.borrow_book(rugby_book, julia)
     library.print_status()
 
 if __name__ == "__main__":
