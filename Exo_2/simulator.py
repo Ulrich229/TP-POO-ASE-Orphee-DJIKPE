@@ -8,7 +8,7 @@ log = logging.getLogger(__name__)
 
 class FightSimulator:
 
-    def __init__(self, fighters: list[Character]):
+    def __init__(self, fighters: """ list[Character] """):
         if len(fighters) < 2:
             raise AttributeError(f"Number of fighters to small: {fighters}")
 
@@ -28,7 +28,7 @@ class FightSimulator:
 
             for defender in shuffled_fighters:
                 if attacker == defender:
-                    # attacker doesn't attack itself
+                    # attacker doesn't attack itselfe
                     continue
 
                 if defender.is_dead:
